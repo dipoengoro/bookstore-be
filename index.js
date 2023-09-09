@@ -48,6 +48,17 @@ app.get("/books", async (req, res) => {
   }
 });
 
+app.get("/books/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const book = await Book.findById(id);
+    return res.status(200).json(book);
+  } catch (e) {
+    console.error(e.message);
+    res.status(500).send({ message: e.message });
+  }
+});
+
 mongoose
   .connect(mongoDBURL)
   .then(() => {
